@@ -45,13 +45,14 @@ namespace repositorio
                     op2 = Convert.ToDouble(numeros[1]);
                     historial.Add(entrada);
                 }
-                else if (entrada.Contains("/"))
-                {
+                else if (entrada.Contains("/")) {
                     historial.Add(entrada);
                     operacion = "/";
                     numeros = entrada.Split("/");
                     op1 = Convert.ToDouble(numeros[0]);
                     op2 = Convert.ToDouble(numeros[1]);
+                } else if (entrada.Contains("^")) {
+                    operacion = "^";
                 }
                 else
                 {
@@ -84,6 +85,16 @@ namespace repositorio
                         break;
                     case "h":
                         imprimirHistorial(historial);
+                        break;
+                    case "^":
+                        try
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(entrada), "Error: Operación no soportada.");
+                        }
+                        catch (ArgumentOutOfRangeException e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                     case "q":
                         Console.WriteLine("Saliendo de la calculadora...");
