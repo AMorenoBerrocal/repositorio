@@ -11,6 +11,8 @@ namespace repositorio {
             double op1=0, op2 = 0;
             string[] numeros;
 
+            List<string> historial = new List<string>();
+
             do
             {
                 Console.WriteLine("Introduzca operación: ");
@@ -21,16 +23,19 @@ namespace repositorio {
                     numeros = entrada.Split('+');
                     op1 = Convert.ToDouble(numeros[0]);
                     op2 = Convert.ToDouble(numeros[1]);
+                    historial.Add(entrada);
                 } else if (entrada.Contains("-")) {
                     operacion = "-";
                     numeros = entrada.Split("-");
                     op1 = Convert.ToDouble(numeros[0]);
                     op2 = Convert.ToDouble(numeros[1]);
                 } else if (entrada.Contains("*")) {
+                    historial.Add(entrada);
                     operacion = "*";
                     numeros = entrada.Split('*');
                     op1 = Convert.ToDouble(numeros[0]);
                     op2 = Convert.ToDouble(numeros[1]);
+                    historial.Add(entrada);
                 } else {
                     operacion = entrada;
                 }
@@ -45,6 +50,9 @@ namespace repositorio {
                     case "*":
                         Console.WriteLine($"Resultado: {op1 * op2}");
                         break;
+                    case "h":
+                        imprimirHistorial(historial);
+                        break;
                     case "q":
                         Console.WriteLine("Saliendo de la calculadora...");
                         break;
@@ -56,6 +64,15 @@ namespace repositorio {
             } while (!operacion.Equals("q"));         
 
 
+        }
+        
+        public static void imprimirHistorial(List<string> listaOperaciones) {
+            Console.WriteLine("--Calculadora básica-");
+            Console.WriteLine("---------------------");
+            Console.WriteLine("Imprimiendo historial");
+            foreach (string operacion in listaOperaciones) {
+                Console.WriteLine(operacion);
+            }
         }
 
     }
