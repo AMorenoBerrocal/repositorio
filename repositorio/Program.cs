@@ -1,14 +1,17 @@
 ﻿using System;
 
-namespace repositorio {
-    class Program {
-        public static void Main(string[] args) {
+namespace repositorio
+{
+    class Program
+    {
+        public static void Main(string[] args)
+        {
 
             Console.WriteLine("Calculadora básica");
             Console.WriteLine("------------------");
 
             string entrada, operacion;
-            double op1=0, op2 = 0;
+            double op1 = 0, op2 = 0;
             string[] numeros;
 
             List<string> historial = new List<string>();
@@ -18,29 +21,46 @@ namespace repositorio {
                 Console.WriteLine("Introduzca operación: ");
                 entrada = Console.ReadLine();
 
-                if (entrada.Contains("+")) {
+                if (entrada.Contains("+"))
+                {
                     operacion = "+";
                     numeros = entrada.Split('+');
                     op1 = Convert.ToDouble(numeros[0]);
                     op2 = Convert.ToDouble(numeros[1]);
                     historial.Add(entrada);
-                } else if (entrada.Contains("-")) {
+                }
+                else if (entrada.Contains("-"))
+                {
                     operacion = "-";
                     numeros = entrada.Split("-");
                     op1 = Convert.ToDouble(numeros[0]);
                     op2 = Convert.ToDouble(numeros[1]);
-                } else if (entrada.Contains("*")) {
+                }
+                else if (entrada.Contains("*"))
+                {
                     historial.Add(entrada);
                     operacion = "*";
                     numeros = entrada.Split('*');
                     op1 = Convert.ToDouble(numeros[0]);
                     op2 = Convert.ToDouble(numeros[1]);
                     historial.Add(entrada);
-                } else {
+                }
+                else if (entrada.Contains("/")) {
+                    historial.Add(entrada);
+                    operacion = "/";
+                    numeros = entrada.Split("/");
+                    op1 = Convert.ToDouble(numeros[0]);
+                    op2 = Convert.ToDouble(numeros[1]);
+                } else if (entrada.Contains("^")) {
+                    operacion = "^";
+                }
+                else
+                {
                     operacion = entrada;
                 }
 
-                switch (operacion) {
+                switch (operacion)
+                {
                     case "+":
                         Console.WriteLine($"Resultado: {op1 + op2}");
                         break;
@@ -50,8 +70,31 @@ namespace repositorio {
                     case "*":
                         Console.WriteLine($"Resultado: {op1 * op2}");
                         break;
+                    case "/":
+                        try
+                        {
+                            if(op2 == 0)
+                            {
+                                throw new DivideByZeroException();
+                            }
+                            double aux = op1 / op2;
+                            Console.WriteLine("Resultado: " + aux);
+                        } catch (DivideByZeroException e) {
+                            Console.WriteLine("Error: operación no válida: " + entrada);
+                        }
+                        break;
                     case "h":
                         imprimirHistorial(historial);
+                        break;
+                    case "^":
+                        try
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(entrada), "Error: Operación no soportada.");
+                        }
+                        catch (ArgumentOutOfRangeException e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
                     case "q":
                         Console.WriteLine("Saliendo de la calculadora...");
@@ -61,18 +104,20 @@ namespace repositorio {
                         break;
                 }
 
-            } while (!operacion.Equals("q"));         
-
+            } while (!operacion.Equals("q"));
 
         }
-        
-        public static void imprimirHistorial(List<string> listaOperaciones) {
+
+        public static void imprimirHistorial(List<string> listaOperaciones)
+        {
             Console.WriteLine("--Calculadora básica-");
             Console.WriteLine("---------------------");
             Console.WriteLine("Imprimiendo historial");
-            foreach (string operacion in listaOperaciones) {
+            foreach (string operacion in listaOperaciones)
+            {
                 Console.WriteLine(operacion);
             }
+            Console.WriteLine("---------------------");
         }
 
     }
