@@ -10,8 +10,19 @@ namespace repositorio
     {
         public int Calculate(int number1, int number2, string operation)
         {
-            if (operation == "/"){
-                return Divide(number1, number2);
+            string nonNullOperation = 
+                operation ?? throw new ArgumentNullException(nameof(operation));
+
+            
+            if (nonNullOperation == "/"){
+                try
+                {
+                    return Divide(number1, number2);
+                } catch (DivideByZeroException ex)
+                {
+                    Console.WriteLine("...division por 0...");
+                    throw new ArithmeticException("Error durante el calculo", ex);
+                }
             } else
             {
                 throw new ArgumentOutOfRangeException(nameof(operation), "Esa operacion matemática no tiene soporte");
