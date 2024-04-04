@@ -23,6 +23,12 @@ namespace repositorio
                 var calculator = new Calculator();
                 int result = calculator.Calculate(number1, number2, operacion);
                 DisplayResult(result);
+            } catch (ArgumentNullException e) when (e.ParamName == "operation")
+            {
+                Console.WriteLine("Operacion no proporcionada");
+            } catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine("Operación sin soporte");
             }
             catch (Exception e)
             {
